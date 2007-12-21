@@ -1,0 +1,89 @@
+/*******************************************************************************
+ * eZ Personal Frontpage extension design
+ * Internet Explorer 6 fixes
+ * 
+ ******************************************************************************/
+
+div.widget-menu a.maxmin-button {
+    margin: 0;
+    padding: 0;
+    margin-top: 3px;    
+}
+
+div.widget-menu a.close-button {
+    margin: 0;
+    padding: 0;
+    margin-left: 3px;
+    margin-top: 3px;
+    float: right;
+}
+
+div.widget-menu {
+    width: 37px;
+}
+
+a#addNewWidgetButton {
+    margin: 0;
+    margin-left: 4px;
+}
+
+div.avaible-widgets div.border-tl,
+div.avaible-widgets div.border-tr,
+div.avaible-widgets div.border-tc,
+div.avaible-widgets div.border-ml,
+div.avaible-widgets div.border-mr,
+div.avaible-widgets div.border-mc,
+div.avaible-widgets div.border-bl,
+div.avaible-widgets div.border-br,
+div.avaible-widgets div.border-bc
+{
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
+div.avaible-widgets div.border-mc:before,
+div.avaible-widgets div.border-mc:after {
+    display: none;
+}
+
+div.avaible-widgets div.content
+{
+    background-color: #B3B3B3;
+    border: 2px solid #939393;
+    margin: 0;
+    padding: 12px;
+}
+
+div.avaible-widgets .close-button {
+    margin: 0;
+    padding: 0;
+}
+
+
+div#selectColumnPopup div.border-left,
+div#selectColumnPopup div.border-right {
+    background: none;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
+
+div#selectColumnPopup a.close-button {
+    margin: 3px;
+    margin-top: 5px;
+    padding: 0;
+}
+
+div.widget-content div.news-folder li,
+div#main div.widget-content div.news-folder li {
+    margin-bottom: 25px;
+}
+
+div#selectColumnPopup {
+    width: 150px;
+}
+
+div#selectColumnPopup div.border-content {
+    width: auto;
+}

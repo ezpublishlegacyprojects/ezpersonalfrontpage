@@ -1,0 +1,213 @@
+/*******************************************************************************
+ * eZ Personal Frontpage extension design
+ * Content Design
+ *  
+ ******************************************************************************/
+
+div.widget-content ul li
+{
+    list-style-type:    none;
+    margin:             0.75em 0pt 1em 1em;
+    padding:            0pt;
+}
+
+div.widget-content ul li,
+div#main div.widget-content ul li
+{
+    background-image:     url( ../images/dot3.png );
+    background-position:  0 0.4em;
+    background-repeat:    no-repeat;
+    line-height:          1.25em;
+    list-style-type:      none;
+    padding:              2px 0 0 13px;    
+    margin:               0 0 0.5em 0.25em;    
+}
+
+div.widget-content h3
+{
+    margin-top:     0;
+    font-size:      1.0em;
+    font-weight:    bold;
+    border-bottom:  1px solid gray;
+    padding:        0.3em;
+}
+
+/************* news folder ****************************************************/
+
+div.widget-content div.news-folder .intro,
+div#main div.widget-content div.news-folder .intro
+{
+    font-size: .85em;
+}
+
+div.widget-content div.news-folder ul,
+div#main div.widget-content div.news-folder ul
+{
+    list-style: none;
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+
+div.widget-content div.news-folder li,
+div#main div.widget-content div.news-folder li
+{
+    background: none;
+    margin: 8px;
+    border-left: 0px solid gray;
+    margin-top: 10px;
+    padding: 0;
+    padding-left: 3px;
+}
+
+div.news-folder h3
+{
+    font-size: 1.2em;
+    clear: both;
+}
+
+div.news-folder a
+{
+    float: right;
+}
+
+div.news-folder div.short-description
+{
+    color:#666666;
+    font-size:0.9em;
+    text-align:center;
+    padding: 0;
+    margin: 0;
+}
+
+/***************** folder  ****************************************************/
+
+div.widget-content ul li.folder-line,
+div#main div.widget-content ul li.folder-line
+{
+    background-image:url( ../images/folder_icon.png );
+    background-position: 0 0;
+    height: 18px;
+    padding-left: 24px;
+}
+
+
+/****************** calendar **************************************************/
+
+div.widget-calendar
+{
+    margin: 5px;
+}
+
+div.widget-calendar div#ezagenda_calendar_container table
+{
+    border-top:   1px solid #E0E0E0;
+    border-right: 1px solid #E0E0E0;
+    border-left:  1px solid #E0E0E0;
+}
+
+div.widget-calendar div#ezagenda_calendar_container table td
+{
+    padding: 4px;
+}
+
+/**************** module widgets **********************************************/
+
+.loading
+{
+    border:     1px solid #999999;
+    display:    block;
+    margin:     10px auto;
+}
+
+.widget-settings-button
+{
+    color: black;
+    float:right;
+    margin:3px;
+    padding:1px;
+}
+
+.widget-settings-button:hover
+{
+    color: gray;
+}
+
+
+/****************** weather ***************************************************/
+.widget-settings
+{
+    border-bottom: 2px solid black;
+    background-color: #CCCCCC;
+    padding: 4px;
+}
+
+#weather_widget_search_result
+{
+    background-color: #DDDDDD;
+    margin: 5px;
+}
+
+#weather_widget_settings fieldset
+{
+    width: 200px;
+}
+
+#weather_widget_settings legend
+{
+}
+
+#weather_widget_settings input
+{
+    margin: 3px;
+}
+
+input#weather_widget_local
+{
+    border: 1px solid black;
+    width: 175px;
+    padding: 1px;
+}
+
+#weather-widget-content
+{
+    padding: 4px;
+}
+
+#weather-widget-content .icon
+{
+    float: right;
+}
+
+#weather-widget-content .temperature
+{
+    font-size: 30px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+#weather-widget-content .weather
+{
+    margin-left: 15px;
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+#weather-widget-content .info
+{
+    font-size: 10px;
+    float: right;
+    margin-top: 8px;
+}
+
+#weather-widget-content table
+{
+    width: 100%;
+}
+
+#weather-widget-content td
+{
+    background-color: #DDDDDD;
+    font-size: 12px;
+    padding: 2px;
+}

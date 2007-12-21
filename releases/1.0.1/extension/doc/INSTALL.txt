@@ -1,0 +1,175 @@
+eZ Personal Frontpage extension 1.0.1 INSTALL
+
+
+What is the eZ Personal Frontpage extension?
+============================================
+
+   eZ Personal Frontpage allows content objects to be shown
+   on personalized frontpages which can individually be moved by drag & drop.
+   For more information about this extension please read the README file.
+
+
+Requirements
+============
+
+The following requirements exists for using eZ Personal Frontpage extension:
+
+o  eZ Publish version:
+
+   Make sure you use eZ Publish version 3.9 or higher.
+
+o  eZ Webin 1.2.0
+
+    eZ Webin 1.2 or higher is required.
+
+o  PHP version:
+
+   as indicated in your eZ Publish version requirements
+
+o  Web Browser:
+
+   Make sure you have one of the following web browsers:
+   Internet Explorer 6.0 or higher,
+   Mozilla 1.3 or higher,
+   Firefox 1.0 or higher.
+
+o Javascript support has to be enabled in your web browser
+
+
+Getting eZ Publish
+==================
+
+You can download a version of eZ Publish from ez.no, you will find the
+various versions at:
+http://ez.no/download/ez_publish
+
+NOTE: You will need eZ Publish 3.9 or higher.
+
+Information on the installation of eZ Publish can be found at:
+http://ez.no/doc
+
+
+Installing eZ Personal Frontpage extension
+==========================================
+
+1. Download the eZ Personal fronpage package.
+
+
+2. Copy the downloaded package into the 'extension' directory of your
+   eZ Publish installation.
+
+
+3. Unpack the files in the distribution.
+
+   Windows users should unzip the files. The 'ezpersonalfrontpage' directory
+   will be created inside the 'extension' directory.
+
+   Linux users may use of the following commands depending on the file type:
+   [tar.gz]:
+   $ tar -zxvf ezpersonalfrontpage-extension-1.0.1.tar.gz
+   [bz2]:
+   $ tar -jxvf ezpersonalfrontpage-extension-1.0.1.bz2
+   [zip]:
+   $ unzip ezpersonalfrontpage-extension-1.0.1.zip
+
+
+4. Enable the extension in eZ Publish.
+
+   To enable eZ Personal Frontpage for your frontpage siteaccesses,
+   you have to edit the file 'site.ini.append.php' located
+   in the 'settings/siteaccess/[your siteaccess]' directory.
+   Add the following line under the [ExtensionSettings] section:
+
+   ActiveAccessExtensions[]=ezpersonalfrontpage
+
+
+5. Enable the design extension in eZ Publish.
+
+   You also have to activate eZ Personal Frontpage as design extension.
+   Therefore edit the 'site.ini.append.php' located
+   in the 'settings/siteaccess/[your siteaccess]' directory
+   and set 'ezpersonalfrontpage' under the [DesignSettings] section
+   as SiteDesign. You will have to keep ezwebin as additional site design,
+   by adding ezwebin to AdditionalSiteDesignList[].
+   For example the [DesignSettings] section could look as follows:
+
+   [DesignSettings]
+   SiteDesign=ezpersonalfrontpage
+   AdditionalSiteDesignList[]=base
+   AdditionalSiteDesignList[]=ezwebin
+
+
+6. Importing Content Classes
+
+   Log in to your eZ Publish administration interface, select the 'Setup' tab,
+   select 'Packages' and then click the 'Import Package' button.
+   Select ezpersonal_frontpage_1.0.ezpkg located in
+   'extensions/ezpersonalfrontpage/ezpackages/contentclasses/3.9'
+   and click to 'import package'.
+
+
+7. OPTIONAL: Enable eZ Website Toolbar on the 'Personal Frontpage'
+
+   If you want to use the eZ Website Toolbar on the 'Personal Frontpage',
+   you will have to edit the 'websitetoolbar.ini' located in
+   '/extension/ezwebin/settings/' and add the following line to the
+   WebsiteToolbarSettings block:
+
+   AvailableForClasses[]=personal_frontpage
+
+
+8. OPTIONAL: If you want to use eZ Publish modules as widgets
+   you will have to set up the access rights to the module for the
+   user group that will have access to eZ Personal Frontpage.
+
+   In order to grant access to modules placed in 'extensions/ezpersonalfrontpage/modules',
+   log in to your eZ Publish administration interface, select the
+   'User accounts' tab, and then click to 'Roles and policies'.
+   Select the correspoding role (e.g. Member), click the 'Edit' button
+   and define a new policy. Chose the 'ezpersonalfrontpage' module
+   and click to the 'Grant access to all functions' button.
+
+   You will find more information at the eZ Publish documentation.
+
+
+9. Clear all the eZ Publish caches.
+
+   Log in to your eZ Publish administration interface, select the 'Setup' tab,
+   and then click the 'Clear all caches' button. 
+
+   The other way to clear all caches is to remove the contents of 'var/cache/'
+   and/or 'var/[your_siteaccess]/cache/' directory.
+
+
+10. Clear the browser caches
+
+    Browsers usually cache visited pages in a folder somewhere. The next time
+    the same pages are visited, they are loaded faster because some of the
+    information already exists on the local storage device.
+
+
+11. Further settings concerning eZ Personal Frontpage can be done in the file
+    'personalfrontpage.ini' located in 'extension/ezpersonalfrontpage/settings'.
+    This ini file contains more information about setting up
+    eZ Personal Frontpage.
+
+
+12. For more information on how to create a new personalized frontpage please
+    read the README file.
+
+
+Troubleshooting
+===============
+
+1. Read the FAQ
+   ------------
+
+   Some problems are more common than others. The most common ones are listed
+   in the FAQ file.
+
+2. Support
+   -------
+
+   If you have find any problems not handled by this document, FAQ and online
+   documentation you can contact eZ system trough the support system:
+   http://ez.no/services/support

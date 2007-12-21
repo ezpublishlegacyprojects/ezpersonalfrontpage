@@ -1,0 +1,11 @@
+/*******************************************************************************
+ * eZ Personal Frontpage extension design
+ * Internet Explorer 7 fixes
+ *  
+ ******************************************************************************/
+
+div.widget-content div.news-folder li,
+div#main div.widget-content div.news-folder li {
+    margin-bottom: 25px;
+    float: right;
+}
