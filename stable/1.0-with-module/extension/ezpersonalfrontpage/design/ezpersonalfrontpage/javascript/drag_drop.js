@@ -4,7 +4,7 @@
 //
 // Created on: <25.05.2007 10:40:04 tw>
 //
-// Copyright (C) 1999-2007 eZ systems as. All rights reserved.
+// Copyright (C) 1999-2007 eZ Systems as. All rights reserved.
 //
 
 
@@ -18,18 +18,24 @@ var gDropRegionOffsetTop    = 30;
 var gDropRegionOffsetBottom = 70;
 
 var gPreviousJSON    = "";
-var	gHistoryDiv      = null;
+var gHistoryDiv      = null;
 
-var gCurrentTarget   = null;
-var gActiveContainer = null;
-var gLastTarget      = null;
-var gDragHelper      = null;
-var gRootParent      = null;
-var gRootSibling     = null;
-var gMouseOffset     = null; 
-var gDropTargets     = [];
-var gDragingDisabled = false;
-var gModuleList 	 = [];
+var gCurrentTarget       = null;
+var gActiveContainer     = null;
+var gLastActiveContainer = null;
+var gLastTarget          = null;
+var gDragHelper          = null;
+var gRootParent          = null;
+var gRootSibling         = null;
+var gMouseOffset         = null; 
+var gDropTargets         = [];
+var gDragingDisabled     = false;
+var gModuleList          = [];
+var gUniqueContainerID   = 1;
+
+var gActiveContainerHighlightOff = 'transparent';
+var gActiveContainerHighlightOn  = 'transparent';
+var gTargetMovingCSSClass        = 'moving';
 
 //----------  initialization ---------------------------------------------------
 
@@ -37,68 +43,68 @@ window.onload = function()
 {
     if( typeof gActivateExtension == 'undefined' ) {
         return;
-	}
-    
+    }
+
     document.onmousemove = mouseMove;
     document.onmousedown = mouseDown;
     document.onmouseup   = mouseUp;
 
     gHistoryDiv = $( 'History' );
-        
+
     debug( "Initialize..." );
-            
+
     var userPrefs = []; 
-        
+
     gPrefs = decodeURI( gPrefs );
-    
+
     debug( "Preferences (clean): " + gPrefs );
-    
+
     try
     {
         userPrefs = gPrefs.parseJSON();
     }
     catch(error)
     {
-		debug( "Error parsing JSON");
+        debug( "Error parsing JSON" );
         debug( error );
     }
-    
+
     for( var c = 0; c < gNumOfColumns; c++ )
     {
         var container = userPrefs[c];
-        
+
         if( container === undefined ) {
             continue;
-		}
-        
+        }
+
         for( var i = 0; i < container.length; i++)
         {
-            moveWidget( "DragContainer", "box", container[i], c );
+            moveWidget( gContainerName, "box", container[i], c );
         }
     }
-    
+
     gPreviousJSON = gPrefs;
-    
+
     var containerArray = [];
-    
+
     for( var x = 1; x <= gNumOfColumns; x++ )
     {
-        containerArray.push( $( 'DragContainer' + x ) );
+        containerArray.push( $( gContainerName + x ) );
     }
     containerArray.push( $( 'TempContainer' ) );
-        
-	CreateDropContainer( containerArray );
-	
-	debug( "Initialization of module widgets!" );
-	
+
+    CreateDropContainer( containerArray );
+
+    debug( "Initialization of module widgets!" );
+
     for( var moduleId in gModuleList )
     {
-		if( !isNaN( moduleId ) )
-		{
-	      	LoadModule( moduleId );
-		}
+        if( !isNaN( moduleId ) )
+        {
+            LoadModule( moduleId );
+        }
     }
-    
+
     debug( "Initialization finished!\n\n" );
 };
 
@@ -111,45 +117,48 @@ window.onload = function()
 function CreateDropContainer( containerElements )
 {
     gDragHelper = $( 'DragHelper' );     
-    
-	for( var i=0; i < containerElements.length; i++ )
+
+    for( var i=0; i < containerElements.length; i++ )
     {
-		var container = containerElements[i];
-		
-		gDropTargets.push( container );
-		
-		container.setAttribute( 'ezdragdrop:isDropTarget', true );
+        var container = containerElements[i];
 
-		debug( "Created Container " + i + ": " + container.id );
+        gUniqueContainerID++;
+        container.uid = gUniqueContainerID;
 
-		for( var j=0; j < container.childNodes.length; j++ )
+        gDropTargets.push( container );
+
+        container.setAttribute( 'ezdragdrop:isDropTarget', true );
+
+        debug( "Created Container " + i + ": " + container.id );
+
+        for( var j=0; j < container.childNodes.length; j++ )
         {
-			/* skip #text nodes (Firefox) */
-			if( container.childNodes[j].nodeName == '#text' )
-			{
+            /* skip #text nodes (Firefox) */
+            if( container.childNodes[j].nodeName == '#text' )
+            {
                 continue;
-			}
-			
-			container.childNodes[j].setAttribute( 'ezdragdrop:isDragableObject', true );
-			
-			var DragObjChildren = container.childNodes[j].getElementsByTagName( 'div' );
-			
+            }
+
+            container.childNodes[j].setAttribute( 'ezdragdrop:isDragableObject', true );
+
+            var DragObjChildren = container.childNodes[j].getElementsByTagName( 'div' );
+
             for( var k = 0; k < DragObjChildren.length; k++ )
             {
                 if( DragObjChildren[k].nodeName == '#text' )
-				{
+                {
                     continue;
                 }
-				   
+
                 if( DragObjChildren[k].className != 'widget-dragbar-handler' )
-				{
+                {
                     continue;
                 }
-				
+
                 DragObjChildren[k].setAttribute( 'ezdragdrop:isDragableObjectHandler', true );
             }
-		}
-	}
+        }
+    }
 }
 
 /*
@@ -157,32 +166,45 @@ function CreateDropContainer( containerElements )
  */
 function mouseUp(event)
 {
-	if( gCurrentTarget )
+    if( gCurrentTarget )
     {
-		objectNotification( gCurrentTarget, 'Mouse Up Fired' );
+        objectNotification( gCurrentTarget, 'Mouse Up Fired' );
 
         hide( gDragHelper );
-		
-		/* Move Target to previous Position */
-		if( isHidden( gCurrentTarget ) )
+
+        /* Move Target to previous Position */
+        if( isHidden( gCurrentTarget ) )
         {
-			if( gRootSibling )
-			{
+            if( gRootSibling )
+            {
                 gRootParent.insertBefore( gCurrentTarget, gRootSibling );
             }
-			else
-			{
+            else
+            {
                 gRootParent.appendChild( gCurrentTarget );
             }
-		}
-           
+        }
+
         updateBoxSettingsOnHost();
 
         show( gCurrentTarget );
-	}
 
-	gCurrentTarget = null;
-	gIsMouseDown = false;
+        targetClassName = gCurrentTarget.getAttribute( 'ezdragdrop:className' );
+
+        if( gActiveContainer != undefined ) /* Box was dropped to the active container */
+        {
+            gActiveContainer.style.backgroundColor  = gActiveContainerHighlightOff;
+        }
+        else if( gLastActiveContainer != undefined ) /* Box was dropped outside of any containers */
+        {
+            gLastActiveContainer.style.backgroundColor = gActiveContainerHighlightOff;
+        }
+
+        gCurrentTarget.className = targetClassName;
+    }
+
+    gCurrentTarget = null;
+    gIsMouseDown = false;
 }
 
 /*
@@ -191,26 +213,26 @@ function mouseUp(event)
 function mouseDown( event )
 {
     if( gDragingDisabled )
-	{
-		return;
-	}
-    
-	event      = event || window.event;
-	var target = event.target || event.srcElement;
+    {
+        return;
+    }
 
-	gIsMouseDown = true;
+    event      = event || window.event;
+    var target = event.target || event.srcElement;
 
-	if( gLastTarget )
-	{
-		objectNotification( gLastTarget, 'Mouse Down' );
-	}
-	
-	if( target.onmousedown || isDragableObject( target ) )
-	{
-		return false;
-	}
-    	
-	return true;
+    gIsMouseDown = true;
+
+    if( gLastTarget )
+    {
+        objectNotification( gLastTarget, 'Mouse Down' );
+    }
+
+    if( target.onmousedown || isDragableObject( target ) )
+    {
+        return false;
+    }
+
+    return true;
 }
 
 /*
@@ -219,25 +241,28 @@ function mouseDown( event )
 function mouseMove( event )
 {
     event = event || window.event;
-	
-	var target  = event.target || event.srcElement;
 
-	gMousePos = getMouseScreenPosition( event );
-	
+    var target  = event.target || event.srcElement;
+
+    gMousePos = getMouseScreenPosition( event );
+
     /* mouse moved over a draggable obj  */
     if( isDragableObjectHandler( target ) )
-    {	
+    {    
         var parent = target.parentNode;
 
         /* if the user is just starting to drag the element */
         if( mouseButtonClicked() )
         {
             objectNotification( target, 'Start Dragging' );
-        
+
             gCurrentTarget = parent;
             gRootParent    = gCurrentTarget.parentNode;
             gRootSibling   = gCurrentTarget.nextSibling;
-        
+
+            gCurrentTarget.setAttribute( 'ezdragdrop:className', gCurrentTarget.className );
+            gCurrentTarget.className = gCurrentTarget.className + ' ' + gTargetMovingCSSClass;
+
             /* remember mouse x and y offset for the element */
             gMouseOffset = getMouseOffset( parent, event, gMousePos );
 
@@ -247,27 +272,27 @@ function mouseMove( event )
             {
                 gCurrentTarget.setAttribute( 'ezdragdrop:startWidth',
                                              parseInt( gCurrentTarget.offsetWidth ) );
-                                             
+
                 gCurrentTarget.setAttribute( 'ezdragdrop:startHeight',
                                              parseInt( gCurrentTarget.offsetHeight ) );
-                
+
                 gCurrentTarget.style.display  = 'none';
             }
-            
+
             cacheObjectPositions();
-            
+
         }           
     }
-        
+
     /* user is dragging */
     if( gCurrentTarget )
         draggingRoutine();
-    
-	gLastTarget = target;	
-	gPreviousMouseState = gIsMouseDown;
 
-	if( gCurrentTarget )
-	{
+    gLastTarget = target;    
+    gPreviousMouseState = gIsMouseDown;
+
+    if( gCurrentTarget )
+    {
         return false;
     }
 }
@@ -282,14 +307,20 @@ function draggingRoutine()
     var x = gMousePos.x - gMouseOffset.x;
     var y = gMousePos.y - gMouseOffset.y;
 
-	var ieOffset = getIEScrollOffset();
+    var ieOffset = getIEScrollOffset();
 
-	var xPos = ieOffset.x + x + ( getCachedObjectPosition( gCurrentTarget, 'width' ) / 2 );
-	var yPos = ieOffset.y + y;
+    var xPos = ieOffset.x + x + ( getCachedObjectPosition( gCurrentTarget, 'width' ) / 2 );
+    var yPos = ieOffset.y + y;
 
-	moveObjectToPosition( gDragHelper, x, y );
-			
+    moveObjectToPosition( gDragHelper, x, y );
+
     gActiveContainer = getActiveContainer( xPos, yPos );
+
+    /* Remember last active container */
+    if( gActiveContainer != undefined )
+    {
+        gLastActiveContainer = gActiveContainer;
+    }
 
     /* target object is in a container */
     if( gActiveContainer )
@@ -299,24 +330,30 @@ function draggingRoutine()
             objectNotification( gCurrentTarget, 'Moved into ' + gActiveContainer.id );
         }
 
+        for( var i = 0; i < gDropTargets.length; i++ )
+        {
+            gDropTargets[i].style.backgroundColor  = gActiveContainerHighlightOff;
+        }
+        gActiveContainer.style.backgroundColor  = gActiveContainerHighlightOn;
+
         moveObjectInDOM( xPos, yPos );
 
-		setTimeout( setContainerSizesTimeout, 10 );
-				
+        setTimeout( setContainerSizesTimeout, 10 );
+
         /* make drag item visible */
-		if( isHidden( gCurrentTarget ) )
+        if( isHidden( gCurrentTarget ) )
         {
-			objectNotification(gCurrentTarget, 'Made Visible');
-			makeInsivible( gCurrentTarget );
-		}
+            objectNotification(gCurrentTarget, 'Made Visible');
+            makeInsivible( gCurrentTarget );
+        }
     }
     else /* not inside a container */
     {
         /* drag item is not in a container */
         if( !isHidden( gCurrentTarget ) )
         {
-			objectNotification( gCurrentTarget, 'Hidden' );
-			hide( gCurrentTarget );
+            objectNotification( gCurrentTarget, 'Hidden' );
+            hide( gCurrentTarget );
         }
     }
 }
@@ -328,13 +365,13 @@ function setContainerSizesTimeout( )
 {
     if( gActiveContainer == undefined )
         return;
-        
+
     var containerPos = getObjectPosition( gActiveContainer );
-				            
+
     with( gActiveContainer )
     {
-        setAttribute( 'ezdragdrop:startWidth',  parseInt( offsetWidth ) );
-        setAttribute( 'ezdragdrop:startHeight', parseInt( offsetHeight ) );
+        setAttribute( 'ezdragdrop:startWidth',  parseInt( offsetWidth ).NaN0() );
+        setAttribute( 'ezdragdrop:startHeight', parseInt( offsetHeight ).NaN0() );
         setAttribute( 'ezdragdrop:startLeft',   containerPos.x );
         setAttribute( 'ezdragdrop:startTop',    containerPos.y );
     }
@@ -351,7 +388,7 @@ function prepareDragHelper()
     }
 
     gDragHelper.appendChild( gCurrentTarget.cloneNode(true) );
-    
+
     show( gDragHelper );        
 }
 
@@ -363,42 +400,42 @@ function moveObjectInDOM( xPos, yPos )
     /* beforeNode will hold the first node AFTER where the div belongs */
     var beforeNode = null;
 
-	for( var i = gActiveContainer.childNodes.length - 1; i >= 0; i-- )
+    for( var i = gActiveContainer.childNodes.length - 1; i >= 0; i-- )
     {
-		if( gActiveContainer.childNodes[i].nodeName == '#text' )
+        if( gActiveContainer.childNodes[i].nodeName == '#text' )
             continue;
 
         var startBottom =  getCachedObjectPosition( gActiveContainer.childNodes[i], 'bottom' ); 
         var startRight  =  getCachedObjectPosition( gActiveContainer.childNodes[i], 'right' );
 
-		/* if the current item is "After" the item being dragged */
-		if( gCurrentTarget != gActiveContainer.childNodes[i] )
-		{
-	        if( ( startRight  > xPos ) && ( startBottom > yPos ) )
+        /* if the current item is "After" the item being dragged */
+        if( gCurrentTarget != gActiveContainer.childNodes[i] )
+        {
+            if( ( startRight  > xPos ) && ( startBottom > yPos ) )
             {
                 beforeNode = gActiveContainer.childNodes[i];
             }
         }
-	}
-    
-	if( beforeNode )
+    }
+
+    if( beforeNode )
     {
         /* the item being dragged belongs before another item */
-		if( beforeNode != gCurrentTarget.nextSibling )
+        if( beforeNode != gCurrentTarget.nextSibling )
         {
-			objectNotification( gCurrentTarget, 'Inserted Before ' + beforeNode.id );
-			gActiveContainer.insertBefore( gCurrentTarget, beforeNode );
-		}
-	}
+            objectNotification( gCurrentTarget, 'Inserted Before ' + beforeNode.id );
+            gActiveContainer.insertBefore( gCurrentTarget, beforeNode );
+        }
+    }
     else 
     {
         /* the item being dragged belongs at the end of the current container */
-		if( ( gCurrentTarget.nextSibling ) || ( gCurrentTarget.parentNode != gActiveContainer ) )
+        if( ( gCurrentTarget.nextSibling ) || ( gCurrentTarget.parentNode != gActiveContainer ) )
         {
-			objectNotification( gCurrentTarget, 'Inserted at end of ' + gActiveContainer.id );
-			gActiveContainer.appendChild( gCurrentTarget );
-		}
-	}
+            objectNotification( gCurrentTarget, 'Inserted at end of ' + gActiveContainer.id );
+            gActiveContainer.appendChild( gCurrentTarget );
+        }
+    }
 }
 
 /*
@@ -408,22 +445,22 @@ function getActiveContainer( xPos, yPos )
 {
     var activeContainer = null;
 
-	for( var i = 0; i < gDropTargets.length; i++ )
+    for( var i = 0; i < gDropTargets.length; i++ )
     {
         var startLeft   = getCachedObjectPosition( gDropTargets[i], 'left' ); 
         var startTop    = getCachedObjectPosition( gDropTargets[i], 'top' ); 
         var startRight  = getCachedObjectPosition( gDropTargets[i], 'right' ); 
         var startBottom = getCachedObjectPosition( gDropTargets[i], 'bottom' );
-                        
+
         if( ( startLeft   < xPos ) &&
-			( startTop    < yPos + gDropRegionOffsetTop ) &&
-			( startRight  > xPos ) && 
-			( startBottom > yPos - gDropRegionOffsetBottom ) )
+            ( startTop    < yPos + gDropRegionOffsetTop ) &&
+            ( startRight  > xPos ) && 
+            ( startBottom > yPos - gDropRegionOffsetBottom ) )
         {
 
-			activeContainer = gDropTargets[i];
+            activeContainer = gDropTargets[i];
             break;
-		}
+        }
     }
     return activeContainer;
 }
@@ -432,41 +469,41 @@ function getActiveContainer( xPos, yPos )
 /*
  *
  */
-function getCachedObjectPosition( object, name )
+function getCachedObjectPosition( DOMObject, name )
 {
-    if( object == undefined || name == '')
+    if( DOMObject == undefined || name == '')
         return;
-    
-    with( object )
+
+    with( DOMObject )
     {    
         switch( name )
         {
             case 'left':
                 return parseInt( getAttribute( 'ezdragdrop:startLeft' ) );
             break;
-        
+
             case 'top':
                 return parseInt( getAttribute( 'ezdragdrop:startTop' ) );
             break;
-        
+
             case 'right':
                 return parseInt( getAttribute( 'ezdragdrop:startLeft' ) )
                      + parseInt( getAttribute( 'ezdragdrop:startWidth' ) );
             break;
-       
+
             case 'bottom':
                 return parseInt( getAttribute( 'ezdragdrop:startTop' ) )
                      + parseInt( getAttribute( 'ezdragdrop:startHeight' ) );            
             break;
-        
+
             case 'width':
                 return parseInt( getAttribute( 'ezdragdrop:startWidth' ) );            
             break;       
-        
+
             case 'height':
                 return parseInt( getAttribute( 'ezdragdrop:startHeight' ) );            
             break;
-        
+
             default:
                 objectNotification( this, name + " not found!" );
                 return;         
@@ -486,7 +523,7 @@ function cacheObjectPositions()
         with( gDropTargets[i] )
         {
             var Position = getObjectPosition( gDropTargets[i] );
-                    
+
             setAttribute( 'ezdragdrop:startWidth',  parseInt( offsetWidth ) );
             setAttribute( 'ezdragdrop:startHeight', parseInt( offsetHeight ) );
             setAttribute( 'ezdragdrop:startLeft',   Position.x );
@@ -499,16 +536,16 @@ function cacheObjectPositions()
             {
                 if( nodeName == '#text' )
                     continue;
-                                    
+
                 if( gDropTargets[i].childNodes[j] == gCurrentTarget )
                     continue;
 
                 var Position = getObjectPosition( gDropTargets[i].childNodes[j] );
 
-				setAttribute( 'ezdragdrop:startWidth',  parseInt(offsetWidth) );
-				setAttribute( 'ezdragdrop:startHeight', parseInt(offsetHeight) );
-				setAttribute( 'ezdragdrop:startLeft',   Position.x );
-				setAttribute( 'ezdragdrop:startTop',    Position.y );
+                setAttribute( 'ezdragdrop:startWidth',  parseInt(offsetWidth) );
+                setAttribute( 'ezdragdrop:startHeight', parseInt(offsetHeight) );
+                setAttribute( 'ezdragdrop:startLeft',   Position.x );
+                setAttribute( 'ezdragdrop:startTop',    Position.y );
             }
         }
     }

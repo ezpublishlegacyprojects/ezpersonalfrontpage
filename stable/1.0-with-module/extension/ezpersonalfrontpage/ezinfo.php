@@ -1,7 +1,7 @@
 <?php
 // SOFTWARE NAME: eZ publish
-// SOFTWARE RELEASE: 3.9.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2006 eZ systems AS
+// SOFTWARE RELEASE: 4.0.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -28,7 +28,7 @@ class ezpersonalfrontpageInfo
     {
         return array( 'Name' => "eZ Publish Personal Frontpage Interface",
                       'Version' => "1.0",
-                      'Copyright' => "Copyright (C) 1999-2007 eZ systems AS",
+                      'Copyright' => "Copyright (C) 1999-2008 eZ systems AS",
                       'License' => "GNU General Public License v2.0"
                      );
     }

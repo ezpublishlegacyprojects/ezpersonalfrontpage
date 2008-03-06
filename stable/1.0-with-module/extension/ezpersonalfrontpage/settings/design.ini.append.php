@@ -14,7 +14,7 @@ JavaScriptList[]=json.js
 JavaScriptList[]=personal_frontpage_helper.js
 JavaScriptList[]=drag_drop.js
 JavaScriptList[]=boxes.js
-JavaScriptList[]=wheater_module.js
+JavaScriptList[]=weather_module.js
 
 
 */ ?>

@@ -89,5 +89,15 @@ ShowAttributeFromContentClass[]=foo;bar
 # 'folder_line.tpl' is processed.
 UseUserTemplateAsList[folder]=folder_line
 
+# The weather module uses the weather.com XOAP data feed.
+# Here you can define your Partner ID and License Key.
+# In order to receive those key you can register freely at
+# http://www.weather.com/services/xmloap.html
+[WeatherModule]
+PartnerID=
+LicenseKey=
+# The weather.com data feed supports to sets of units.
+# You can choose between s ( = standard ) or m ( = metric ).
+Unit=m
 
 */ ?>

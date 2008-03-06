@@ -27,27 +27,27 @@ a#addNewWidgetButton {
     margin-left: 4px;
 }
 
-div.avaible-widgets div.border-tl,
-div.avaible-widgets div.border-tr,
-div.avaible-widgets div.border-tc,
-div.avaible-widgets div.border-ml,
-div.avaible-widgets div.border-mr,
-div.avaible-widgets div.border-mc,
-div.avaible-widgets div.border-bl,
-div.avaible-widgets div.border-br,
-div.avaible-widgets div.border-bc
+div.available-widgets div.border-tl,
+div.available-widgets div.border-tr,
+div.available-widgets div.border-tc,
+div.available-widgets div.border-ml,
+div.available-widgets div.border-mr,
+div.available-widgets div.border-mc,
+div.available-widgets div.border-bl,
+div.available-widgets div.border-br,
+div.available-widgets div.border-bc
 {
     background: none;
     margin: 0;
     padding: 0;
 }
 
-div.avaible-widgets div.border-mc:before,
-div.avaible-widgets div.border-mc:after {
+div.available-widgets div.border-mc:before,
+div.available-widgets div.border-mc:after {
     display: none;
 }
 
-div.avaible-widgets div.content
+div.available-widgets div.content
 {
     background-color: #B3B3B3;
     border: 2px solid #939393;
@@ -55,7 +55,7 @@ div.avaible-widgets div.content
     padding: 12px;
 }
 
-div.avaible-widgets .close-button {
+div.available-widgets .close-button {
     margin: 0;
     padding: 0;
 }

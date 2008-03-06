@@ -1,7 +1,9 @@
 {set-block scope=root variable=cache_ttl}0{/set-block}
+<div class="class-personal-frontpage">
+<div class="overflow-fix">
 
 {def $prefs = ezpreference( concat( "personalfrontpage_widgetlist_", $node.node_id ) ) }
-{if not($prefs)}
+{if $prefs|not}
     {set $prefs = $node.object.data_map.default_arrangement.value}
 {/if}
 
@@ -14,6 +16,9 @@
 {def $box_overflow     = ezini( "WidgetSettings",           "BoxCSSOverflow",                "personalfrontpage.ini" )}
 {def $widget_desc_attr = ezini( "WidgetOverview",           "WidgetDescriptionAttribute",    "personalfrontpage.ini" )}
 {def $debug            = ezini( "PersonalFrontpage",        "JSDebug",                       "personalfrontpage.ini" )}
+{def $container_name   = ezini( "PersonalFrontpage",        "ContainerName",                 "personalfrontpage.ini" )}
+
+{if $container_name|not}{set $container_name = "DragContainer"}{/if}
 
 {if $debug|eq( "enabled" )}
   {def $debug_enabled = "true"}
@@ -63,7 +68,7 @@
     </div>
 </div>
 
-<div class="avaible-widgets border-box" id="avaible-widgets-list" style="display:none">
+<div class="available-widgets border-box" id="available-widgets-list" style="display:none">
 
     {** BOX **}
     <div class="border-tl"><div class="border-tr"><div class="border-tc"></div></div></div>
@@ -72,7 +77,7 @@
 
     <div class="content">
     <h2>{"Add widget:"|i18n('design/ezpersonalfrontpage/full')}</h2>
-    <a class="close-button" href="javascript:closeAvaibleWidgets();"></a>
+    <a class="close-button" href="javascript:closeAvailableWidgets();"></a>
     <br style="clear:both" />
 
     <ul>
@@ -110,7 +115,7 @@
     {** /BOX **}
 </div>
 
-<a href="javascript:showAvaibleWidgets()" id="addNewWidgetButton">{"Add new widget"|i18n('design/ezpersonalfrontpage/full')}</a>
+<a href="javascript:showAvailableWidgets()" id="addNewWidgetButton">{"Add new widget"|i18n('design/ezpersonalfrontpage/full')}</a>
 
 <div id="TempContainer" style="display:none">
 {foreach $node.object.data_map.widget_list.content.relation_list as $relation}
@@ -216,6 +221,7 @@
 <script type="text/javascript">
 var gPrefs               = '{$prefs}';
 var gNumOfColumns        = {$num_of_columns};
+var gContainerName       = '{$container_name}';
 var gPreferencesHostUrl  = '{"/user/preferences/set/"|ezurl(no,"full")}';
 var gHostUrl             = '{"/"|ezurl(no, "full")}';
 var gUserID              = '{$current_user.contentobject_id}';
@@ -231,3 +237,5 @@ var gDebugEnabled        = {$debug_enabled};
 </noscript>
 
 {/cache-block}
+</div>
+</div>

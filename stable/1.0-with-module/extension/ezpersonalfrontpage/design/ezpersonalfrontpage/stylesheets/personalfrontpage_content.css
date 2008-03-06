@@ -134,7 +134,7 @@ div.widget-calendar div#ezagenda_calendar_container table td
 }
 
 
-/****************** wheater ***************************************************/
+/****************** weather ***************************************************/
 .widget-settings
 {
     border-bottom: 2px solid black;
@@ -142,70 +142,70 @@ div.widget-calendar div#ezagenda_calendar_container table td
     padding: 4px;
 }
 
-#wheater_widget_search_result
+#weather_widget_search_result
 {
     background-color: #DDDDDD;
     margin: 5px;
 }
 
-#wheater_widget_settings fieldset
+#weather_widget_settings fieldset
 {
     width: 200px;
 }
 
-#wheater_widget_settings legend
+#weather_widget_settings legend
 {
 }
 
-#wheater_widget_settings input
+#weather_widget_settings input
 {
     margin: 3px;
 }
 
-input#wheater_widget_local
+input#weather_widget_local
 {
     border: 1px solid black;
     width: 175px;
     padding: 1px;
 }
 
-#wheater-widget-content
+#weather-widget-content
 {
     padding: 4px;
 }
 
-#wheater-widget-content .icon
+#weather-widget-content .icon
 {
     float: right;
 }
 
-#wheater-widget-content .temperature
+#weather-widget-content .temperature
 {
     font-size: 30px;
     font-weight: bold;
     margin-left: 10px;
 }
 
-#wheater-widget-content .weather
+#weather-widget-content .weather
 {
     margin-left: 15px;
     font-size: 11px;
     margin-bottom: 10px;
 }
 
-#wheater-widget-content .info
+#weather-widget-content .info
 {
     font-size: 10px;
     float: right;
     margin-top: 8px;
 }
 
-#wheater-widget-content table
+#weather-widget-content table
 {
     width: 100%;
 }
 
-#wheater-widget-content td
+#weather-widget-content td
 {
     background-color: #DDDDDD;
     font-size: 12px;

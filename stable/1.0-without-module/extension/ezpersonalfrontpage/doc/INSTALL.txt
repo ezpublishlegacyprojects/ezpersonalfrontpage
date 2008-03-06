@@ -75,12 +75,13 @@ Installing eZ Personal Frontpage extension
 
 4. Enable the extension in eZ Publish.
 
-   To enable eZ Personal Frontpage for your frontpage siteaccesses,
-   you have to edit the file 'site.ini.append.php' located
-   in the 'settings/siteaccess/[your siteaccess]' directory.
-   Add the following line under the [ExtensionSettings] section:
+   To enable eZ Personal Frontpage, you have to edit the file
+   'site.ini.append.php' located in the 'settings/override' directory.
+   Add the following line under the [ExtensionSettings] section as first line:
 
-   ActiveAccessExtensions[]=ezpersonalfrontpage
+   ActiveExtensions[]=ezpersonalfrontpage
+   
+   Make sure that ezpersonalfrontpage is above the eZ Webin extension (ezwebin).
 
 
 5. Enable the design extension in eZ Publish.
@@ -88,18 +89,35 @@ Installing eZ Personal Frontpage extension
    You also have to activate eZ Personal Frontpage as design extension.
    Therefore edit the 'site.ini.append.php' located
    in the 'settings/siteaccess/[your siteaccess]' directory
-   and set 'ezpersonalfrontpage' under the [DesignSettings] section
-   as SiteDesign. You will have to keep ezwebin as additional site design,
-   by adding ezwebin to AdditionalSiteDesignList[].
+   and add 'ezpersonalfrontpage' under the [DesignSettings] section
+   as AdditionalSiteDesign. Whereas [your siteaccess] is the siteaccess you plan
+   to use for the personal frontpage. Usualy this is your language, e.g.  'ger'.
    For example the [DesignSettings] section could look as follows:
 
    [DesignSettings]
-   SiteDesign=ezpersonalfrontpage
+   SiteDesign=ezwebin
+   AdditionalSiteDesignList[]=ezpersonalfrontpage
    AdditionalSiteDesignList[]=base
-   AdditionalSiteDesignList[]=ezwebin
 
 
-6. Importing Content Classes
+6. Add override rule for personal frontpage
+
+   To override the personal frontpage template edit 'override.ini.append.php'
+   located in the  'settings/siteaccess/[your siteaccess]' directory and
+   add the following lines:
+
+   [full_personal_frontpage]
+   Source=node/view/full.tpl
+   MatchFile=full/personal_frontpage.tpl
+   Subdir=templates
+   Match[class_identifier]=personal_frontpage
+   
+   In the majority of cases you have to edit 'settings/siteaccess/ezwebin_site/
+   override.ini.append.php' instead of 'settings/siteaccess/[your language]/
+   override.ini.append.php'.
+
+
+7. Importing Content Classes
 
    Log in to your eZ Publish administration interface, select the 'Setup' tab,
    select 'Packages' and then click the 'Import Package' button.
@@ -108,7 +126,7 @@ Installing eZ Personal Frontpage extension
    and click to 'import package'.
 
 
-7. OPTIONAL: Enable eZ Website Toolbar on the 'Personal Frontpage'
+8. OPTIONAL: Enable eZ Website Toolbar on the 'Personal Frontpage'
 
    If you want to use the eZ Website Toolbar on the 'Personal Frontpage',
    you will have to edit the 'websitetoolbar.ini' located in
@@ -118,7 +136,7 @@ Installing eZ Personal Frontpage extension
    AvailableForClasses[]=personal_frontpage
 
 
-8. OPTIONAL: If you want to use eZ Publish modules as widgets
+9. OPTIONAL: If you want to use eZ Publish modules as widgets
    you will have to set up the access rights to the module for the
    user group that will have access to eZ Personal Frontpage.
 
@@ -132,7 +150,7 @@ Installing eZ Personal Frontpage extension
    You will find more information at the eZ Publish documentation.
 
 
-9. Clear all the eZ Publish caches.
+10. Clear all the eZ Publish caches.
 
    Log in to your eZ Publish administration interface, select the 'Setup' tab,
    and then click the 'Clear all caches' button. 
@@ -141,20 +159,20 @@ Installing eZ Personal Frontpage extension
    and/or 'var/[your_siteaccess]/cache/' directory.
 
 
-10. Clear the browser caches
+11. Clear the browser caches
 
     Browsers usually cache visited pages in a folder somewhere. The next time
     the same pages are visited, they are loaded faster because some of the
     information already exists on the local storage device.
 
 
-11. Further settings concerning eZ personal frontpage can be done in the file
+12. Further settings concerning eZ personal frontpage can be done in the file
     'personalfrontpage.ini' located in 'extension/ezpersonalfrontpage/settings'.
     This ini file contains more information about setting up
     eZ Personal Frontpage.
 
 
-12. For more information on how to create a new personalized frontpage please
+13. For more information on how to create a new personalized frontpage please
     read the README file.
 
 

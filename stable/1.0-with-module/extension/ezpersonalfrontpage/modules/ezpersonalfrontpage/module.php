@@ -29,8 +29,8 @@ $Module = array( 'name' => 'PersonalFrontpage',
 
 $ViewList = array();
 
-$ViewList['wheater'] = array(
-    'script' => 'wheater.php',
+$ViewList['weather'] = array(
+    'script' => 'weather.php',
     'unordered_params' => array( 'user'  => 'userID',
                                  'where' => 'where',
                                  'local' => 'localID' ) );

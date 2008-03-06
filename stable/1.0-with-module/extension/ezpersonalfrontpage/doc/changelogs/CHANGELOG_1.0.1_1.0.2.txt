@@ -1,0 +1,3 @@
+- Improved peformance
+- eZ Publish 4.0 compatibility
+- eZ Web Interface 1.3 compatibility
