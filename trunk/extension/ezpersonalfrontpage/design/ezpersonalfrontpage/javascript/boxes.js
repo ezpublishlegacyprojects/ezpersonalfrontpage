@@ -26,16 +26,16 @@ function closeWidget( id )
 
     var box    = $( "box_" + id );
     var widget = box.parentNode.removeChild( box );
-    
+
     $( "TempContainer" ).appendChild( widget );
-    
+
     updateBoxSettingsOnHost();
 }
 
 function toggleAddWidgetMenu( id )
 {
     var selectColumnPopup = $( "selectColumnPopup" );
-    
+
     show( selectColumnPopup );
     moveElementToMousePosWithOffset( selectColumnPopup, 10, -10 );
     selectColumnPopup.setAttribute( "SelectedWidget", id );
@@ -44,10 +44,10 @@ function toggleAddWidgetMenu( id )
 function addWidget( pos )
 {
     var selectColumnPopup = $( "selectColumnPopup" );
-    id = parseInt( selectColumnPopup.getAttribute( "SelectedWidget" ) );
+    id = parseInt( selectColumnPopup.getAttribute( "SelectedWidget" ) ).NaN0();
     if( id !== 0 )
     {
-        moveWidget( "DragContainer", "box", id, pos - 1 );
+        moveWidget( gContainerName, "box", id, pos - 1 );
         close( selectColumnPopup );
         selectColumnPopup.setAttribute( "SelectedWidget", 0 );
         updateBoxSettingsOnHost();        
@@ -59,25 +59,25 @@ function closeAddWidgetMenu()
     toggleById( 'selectColumnPopup' );
 }
 
-function showAvaibleWidgets()
+function showAvailableWidgets()
 {
     gDragingDisabled = true;
 
-    moveElementToMousePosWithOffset( $( 'avaible-widgets-list' ), 10, 5 );
-    
+    moveElementToMousePosWithOffset( $( 'available-widgets-list' ), 10, 5 );
+
     /* Close selectColumnPopup if opened */
-    if( !toggleById( 'avaible-widgets-list' ) )
+    if( !toggleById( 'available-widgets-list' ) )
     {
         gDragingDisabled = false;
         close( $( "selectColumnPopup" ) );
     }
 }
 
-function closeAvaibleWidgets()
+function closeAvailableWidgets()
 {
     gDragingDisabled = false;
 
-    toggleById( 'avaible-widgets-list' );
+    toggleById( 'available-widgets-list' );
     
     close( $( "selectColumnPopup" ) );
 }

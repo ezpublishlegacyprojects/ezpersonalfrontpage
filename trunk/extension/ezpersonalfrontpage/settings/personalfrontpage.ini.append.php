@@ -7,6 +7,9 @@
 # Enables JavaScript debug output
 JSDebug=disabled
 
+# Name of the drag container
+ContainerName=DragContainer
+
 
 # Settings concerning the widget overview,
 # which is shown when clicking to "Add Widget"
@@ -88,7 +91,7 @@ UseUserTemplateAsList[folder]=folder_line
 
 # The weather module uses the weather.com XOAP data feed.
 # Here you can define your Partner ID and License Key.
-# In order to receive those key you can register free of charge at
+# In order to receive those key you can register freely at
 # http://www.weather.com/services/xmloap.html
 [WeatherModule]
 PartnerID=

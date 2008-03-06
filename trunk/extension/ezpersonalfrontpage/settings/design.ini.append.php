@@ -1,5 +1,5 @@
 <?php /* #?ini charset="utf-8"?
-# eZ Publish configuration file for modules
+# eZ publish configuration file for modules
 
 [ExtensionSettings]
 DesignExtensions[]=ezpersonalfrontpage

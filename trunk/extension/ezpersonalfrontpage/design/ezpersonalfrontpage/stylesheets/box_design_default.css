@@ -4,15 +4,6 @@
  *  
  ******************************************************************************/
 
-div.widget-row {
-    background-color:   red;
-    float:              left;
-    width:              288px;   
-    margin:             1px;
-    padding:            0;
-    min-height:         100px;         
-}
-
 .DragContainer {
     border:             #EEEEEE 3px solid;
     padding:            1px;
@@ -166,7 +157,7 @@ legend {
 
 /********************** add widget box ****************************************/
 
-div.avaible-widgets {
+div.available-widgets {
     margin:     4px;
     position:   absolute;
     width:      320px;
@@ -177,14 +168,14 @@ div.avaible-widgets {
     padding:    0;  
 }
 
-div.avaible-widgets div.content {
+div.available-widgets div.content {
     background-color: #B3B3B3;
     border:0px solid black;
     margin: 0;
     padding: 0 10px;
 }
 
-div.avaible-widgets h2 {
+div.available-widgets h2 {
     padding: 0;
     margin-left: 10px;
     margin-top: 0;
@@ -194,7 +185,7 @@ div.avaible-widgets h2 {
     font-size: 1.3em;
 }
 
-div.avaible-widgets .close-button {
+div.available-widgets .close-button {
     float: right;
     background-image: url( ../images/closebutton.png );
     text-decoration: none;
@@ -205,29 +196,29 @@ div.avaible-widgets .close-button {
     margin-top: -7px;
 }
 
-div#main div.avaible-widgets ul {
+div#main div.available-widgets ul {
     border-top: 1px solid #E9E9E9;
     list-style: none;
     margin: 0 10px;
     padding: 7px 0 0 0;
 }
 
-div#main div.avaible-widgets ul li {
+div#main div.available-widgets ul li {
     background-image: url(../images/dot.png);
     padding: 0 12px 2px 10px;
     margin: 0;
 }
 
-div.avaible-widgets .widget-item {
+div.available-widgets .widget-item {
     padding: 5px;
     padding-top: 0px;
 }
 
-div.avaible-widgets .widget-item-selected {
+div.available-widgets .widget-item-selected {
     border: 2px solid white;
 }
 
-div.avaible-widgets a {
+div.available-widgets a {
     font-size: 1.1em;
     float: left;
     font-weight: bold;
@@ -236,18 +227,18 @@ div.avaible-widgets a {
     color: #FFFFFF;
 }
 
-div.avaible-widgets a:hover {
+div.available-widgets a:hover {
     color: #FFFFFF;
     text-decoration: underline;
 }
 
-div.avaible-widgets .widget-description {
+div.available-widgets .widget-description {
     font-size: .8em;
     text-align: justify;
     clear: both;
 }
 
-div.avaible-widgets .widget-class {
+div.available-widgets .widget-class {
     color: gray;
     font-size: .7em;
     margin-left: 10px;
@@ -257,39 +248,39 @@ div.avaible-widgets .widget-class {
 
 /********************************** BOXES *************************************/
 
-div.avaible-widgets div.border-tl {
+div.class-personal-frontpage div.available-widgets div.border-tl {
     background: url(../images/box/border-tl.png) no-repeat top left;
 }
 
-div.avaible-widgets div.border-tr {
+div.class-personal-frontpage div.available-widgets div.border-tr {
     background: url(../images/box/border-tr.png) no-repeat top right;
     padding: 0 11px;
 }
 
-div.avaible-widgets div.border-tc {
+div.class-personal-frontpage div.available-widgets div.border-tc {
     font-size: 0;
     height: 12px;
     background: none;
     background-color: #B3B3B3;
 }
 
-div.avaible-widgets div.border-ml {
+div.class-personal-frontpage div.available-widgets div.border-ml {
     background: url(../images/box/border-ml.gif) repeat-y center left;
 }
 
-div.avaible-widgets div.border-mr {
+div.class-personal-frontpage div.available-widgets div.border-mr {
     background: url(../images/box/border-mr.gif) repeat-y center right;
     padding: 0 1px 0 1px;
 }
 
-div.avaible-widgets div.border-mc {
+div.class-personal-frontpage div.available-widgets div.border-mc {
     height: 1%;                   
     background-color: #ffffff;
     padding: 0.5em 0.75em 0.5em 0.75em;
 }
 
-div.avaible-widgets div.border-mc:before,
-div.avaible-widgets div.border-mc:after {
+div.class-personal-frontpage div.available-widgets div.border-mc:before,
+div.class-personal-frontpage div.available-widgets div.border-mc:after {
     content: "-";
     height: 0;
     visibility: hidden;
@@ -297,16 +288,16 @@ div.avaible-widgets div.border-mc:after {
     clear: both;
 }
 
-div.avaible-widgets div.border-bl {
+div.class-personal-frontpage div.available-widgets div.border-bl {
     background: url(../images/box/border-bl.png) no-repeat bottom left;
 }
 
-div.avaible-widgets div.border-br {
+div.class-personal-frontpage div.available-widgets div.border-br {
     background: url(../images/box/border-br.png) no-repeat bottom right;
     padding: 0 11px 0 11px;
 }
 
-div.avaible-widgets div.border-bc {
+div.class-personal-frontpage div.available-widgets div.border-bc {
     font-size: 0;
     height: 12px;
     background: none;
@@ -382,7 +373,7 @@ div#selectColumnPopup span
 {
     font-weight: bold;
     float: left;
-    margin: 5px;
+    margin: 4px;
 }
 
 div#selectColumnPopup a.close-button
@@ -435,4 +426,16 @@ div#warning-nojs {
     margin: 7px;
     padding: 7px;
     font-size: 1.4em;
+}
+
+div.moving div.widget-menu
+{
+    display: none;
+}
+
+div.moving,
+div.moving a,
+div.moving h4
+{
+    color: #666666;
 }

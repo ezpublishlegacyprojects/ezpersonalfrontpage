@@ -61,7 +61,7 @@ function weatherWidgetSelectLocal()
     LoadModule( id, "(local)/" + selectedId );
 }
 
-function toggleheatherSettings( inside )
+function toggleWeatherSettings( inside )
 {
     toggleById( 'weather_widget_settings' );
     
